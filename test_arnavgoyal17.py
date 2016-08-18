@@ -5,12 +5,12 @@
 #   Do not edit lines with comments that start with: "# Last line in"
 ###############################################################################
 # Imports  # there will only be two imports added here.
-
+import os
 
 ###############################################################################
 # Write f01 that prints "Hello World!" and calls f02. (three lines)
 def f01():
-
+    print("Hello World!")
     f02()
 
 
@@ -18,16 +18,17 @@ def f01():
 # Write f02 that sets the variables x, y, and z equal to the words
 # necessary to have the f03 print "i love python!" (five lines)
 
-
-
-
+def f02():
+    x = "i"
+    y = "love"
+    z = "python"
     f03(x, y, z)  # Last line in f2()
 
 
 ###############################################################################
 # Finish f03 (replace the ????).
 def f03(*words):
-    truth = " ".????(words)  # This is broken.
+    truth = " ".join(words)  # This is broken.
     truth_emphasized = truth + "!"
     print(truth_emphasized)
     f04(truth)  # Last line in f03()
@@ -37,7 +38,7 @@ def f03(*words):
 # Write f04 that prints truth backwards (edit one line only)
 # Ex. f4("Littlest Bear") prints "raeB tselttiL"
 def f04(string):
-
+    print(string[::-1])
     f05(string)  # Last line in f04()
 
 
@@ -51,11 +52,8 @@ def f04(string):
 #   Info
 #    Info
 def f05(word):
-
-
-
-
-
+    for n in range(0, len(word)):
+        print(" "*n + word)
     f06("South Hall", "Python Rocks!")  # Last line in f05()
 
 
@@ -71,13 +69,16 @@ def f05(word):
 # 'longer_string' is longer than 'short_string' by 1 chars
 # 'short_string' has only 92.31% the number of chars of longer_string
 def f06(string1, string2):
-
-
-
-
-
-
-
+    if(len(string2) > len(string1)):
+        diff = len(string2) - len(string1)
+        percent = round((len(string1) / len(string2))*100,2)
+        print("{} is longer than {} by {} chars".format(string2, string1, diff))
+        print("{} has only {}{} the number of chars of {}".format(string1, percent, "%", string2))
+    else:
+        diff = len(string1) - len(string2)
+        percent = round((len(string2) / len(string1))*100,2)
+        print("{} is longer than {} by {} chars".format(string1, string2, diff))
+        print("{} has only {}{} the number of chars of {}".format(string2, percent, "%", string1))
     various_solutions()  # Last line in f06()
 
 
@@ -96,7 +97,7 @@ def various_solutions():
     while_ = f07()
     for_ = f08()
     list_comprehension = f09()
-    recursion = f10()
+    recursion = f10(499)
     # DO NOT EDIT BELOW THIS LINE
     vals = [while_, for_, list_comprehension, recursion]
     for val in vals:
@@ -113,22 +114,42 @@ def various_solutions():
 
 ###############################################################################
 def f07():
-    ...
+    final_sum = 0
+    counter = 1
+    while counter < 500:
+        if((counter % 3 == 0) or (counter % 5 == 0)):
+            final_sum = final_sum + counter
+        counter = counter + 1
+
+    return final_sum
 
 
 ###############################################################################
 def f08():
-    ...
+    final_sum = 0
+    for n in range(1, 500):
+        if((n % 3 == 0) or (n % 5 == 0)):
+            final_sum = final_sum + n
+
+    return final_sum
 
 
 ###############################################################################
 def f09():
-    ...
+    final_sum = sum([x for x in range(1, 500) if((x % 3 == 0) or (x % 5 == 0))])
+    return final_sum
 
 
 ###############################################################################
-def f10():
-    ...
+def f10(n):
+    if(n == 3):
+        return 3
+    else:
+        if((n % 3 == 0) or (n % 5 == 0)):
+            return n + f10(n-1)
+        else:
+            return f10(n-1)
+    
 
 
 ###############################################################################
@@ -136,7 +157,12 @@ def f10():
 # strings, integers if they started as floats, and as the value 0 if they
 # started as ints.
 def f11(args):
-    ...
+    if(type(args) == str):
+        print(float(args))
+    elif(type(args) == float):
+        print(int(args))
+    elif(type(args) == int):
+        print(0)
 
 
 ###############################################################################
@@ -152,19 +178,28 @@ def f11(args):
 # Ex. printing
 #   [1.0, 1.3, 2.443]
 def f12():
-    ...
+    userInput = ''
+    listInput = []
+    with open("log_file.txt", "w") as file:
+        while True:
+            try:
+                userInput = input("Enter a float: ")
+                if(userInput == "done" or userInput == '"done"'):
+                    break
+                userInputFloat = float(userInput)
+                listInput.append(userInputFloat)
+            except ValueError:
+                file.write(userInput + "\n")
+                continue
 
-
-
-
-
+        print(listInput)
     f13()  # Last line in f12()
 
 
 ###############################################################################
 # Fix the error in f13:
 def f13():
-    for each in "string"
+    for each in "string":
         print(each)
     f14()  # Last line in f13()
 
@@ -175,8 +210,7 @@ def f13():
 # Please do so at the top of the file.
 # Ex. /Users/dsg/pbc_2016/test/test_danielsgriffin.py
 def f14():
-
-
+    print(os.path.realpath(__file__))
     f15()  # Last line in f14()
 
 
@@ -195,12 +229,10 @@ def f14():
 # [[], [], [], [], [], [], [], [], [0], []]
 # [[], [], [], [], [], [], [], [], [], [0]]
 def f15():
-
-
-
-
-
-
+    for n in range(0, 10):
+        mainList = [[], [], [], [], [], [], [], [], [], []]
+        mainList[n] = [0]
+        print(mainList)
     f16([1, 2, 3], [4, 5, 6])  # Last line in f15()
 
 
@@ -210,12 +242,11 @@ def f15():
 # Ex.
 # [1,2,3] and [4,5,6] would produce [(1, 4), (2, 5), (3, 6)]
 def f16(list1, list2):
-
-
-
-
-
-
+    output = []
+    lenList = len(list1)
+    for n in range(0, lenList):
+        output.append((list1[n], list2[n]))
+    print(output)
     f17()  # Last line in f16()
 
 
@@ -224,13 +255,21 @@ def f16(list1, list2):
 # with the index of the word in that line and the word, sharing tuples.
 # Ex. [(0, 'To'), (1, 'be'), (2, 'or'), (3, 'not'), (4, 'to'), (5, 'be')]
 def f17():
+    file = open("few_words.txt", "r")
+    file.readline()
+    output = []
 
+    line = file.readline()
+    lineList = line.split()
 
+    for n in range(0, len(lineList)):
+        output.append((n, lineList[n]))
+    print(output)
 
-
+    file.close()
 
     # Be sure to save the list that you print to list_
-    list_ = your_list_name_here  # Change to your list variable name
+    list_ = output  # Change to your list variable name
     f18(list_)  # Last line in f17()
 
 
@@ -239,11 +278,11 @@ def f17():
 # Print the dictionary.
 # Call the dictionary in f19()
 def f18(list_):
+    d = {}
+    for items in list_:
+        d[items[1]] = items[0]
 
-
-
-
-
+    print(d)
     f19(d)  # Last line in f18()
 
 
@@ -252,10 +291,13 @@ def f18(list_):
 # would be even), otherwise change the value to the ascii number for the last
 # char in the word. Print the new dictionary.
 def f19(d):
-    
-
-
-
+    for keys in d:
+        new_val = d.get(keys) + len(keys)
+        if(new_val % 2 == 0):
+            d[keys] = d.get(keys) + len(keys)
+        else:
+            d[keys] = ord(keys[-1])
+    print(d)
     f22()  # Last line in f19()
 
 
@@ -264,11 +306,11 @@ def f19(d):
 # f21("Yes") = True, f21("NO") = False,
 # f21("nope") = False, f21("nADA") = False
 def f21(word):
-    ...
-
-
-
-
+    new_word = word.title()
+    if(word == new_word):
+        return True
+    else:
+        return False
 
 # Write f22() to use f21() to (1) print a list of all capitalized words in
 # few_words.txt sorted by length. Then (2) remove all duplicate words.
@@ -282,14 +324,39 @@ def f21(word):
 # Ex. second print:
 # ['PYTHON!', ['Other1', 'Other_2']]
 def f22():
+    listWords = []
+    with open("few_words.txt", "r") as file:
+        for lines in file:
+            words = lines.strip().split()
+            for word in words:
+                if(f21(word)):
+                    listWords.append(word)
 
+    print(sorted(listWords, key=len))
 
+    for words in listWords:
+        if(listWords.count(words) != 1):
+            listWords.remove(words)
 
+    listWords.sort()
+    if("Python" in listWords):
+        listWords.remove("Python")
+        listWords.insert(0, "Python")
 
+    listWords[0] = listWords[0].upper()
+    if("Magic" in listWords):
+        listWords.remove("Magic")
 
+    listWords[0] = listWords[0] + "!"
 
+    templist = []
+    while len(listWords) > 1:
+        templist.append(listWords.pop())
 
+    templist = sorted(templist, key=len)
+    listWords.append(templist)
 
+    print(listWords)
 
     # Last lines in f22()
     f23([["o", "o", "x"], ["x", "o", "x"], ["o", "", "x"]])
@@ -307,30 +374,32 @@ def f22():
 # row3 = ["", "", ""]
 # Ex. of print: x, col2
 def f23(lists_):
-    ...
-
-
-
-
-
-
-
-
-
-
-
-
+    row1 = lists_[0]
+    row2 = lists_[1]
+    row3 = lists_[2]
+    if(row1[0] == row2[0] == row3[0]):
+        print("{}, col1".format(row1[0]))
+    elif(row1[1] == row2[1] == row3[1]):
+        print("{}, col2".format(row1[1]))
+    elif(row1[2] == row2[2] == row3[2]):
+        print("{}, col3".format(row1[2]))
+    elif(row1[0] == row1[1] == row1[2]):
+        print("{}, row1".format(row1[1]))
+    elif(row2[0] == row2[1] == row2[2]):
+        print("{}, row2".format(row2[1]))
+    elif(row3[0] == row3[1] == row3[2]):
+        print("{}, row3".format(row3[1]))
+    elif(row1[0] == row2[1] == row3[2]):
+        print("{}, \\".format(row1[0]))
+    elif(row1[2] == row2[1] == row3[0]):
+        print("{}, /".format(row1[2]))
 
 # Write main() that calls f01, then prints the The Zen of Python, by Tim Peters.
 # (three lines)
 def main():
-    ...
-
-
-
-
-
+    f01()
+    print("\nThe Zen of Python, by Tim Peters.")
 
 # Write the boilerplate code. (two lines, plus empty line at end)
-
-
+if __name__ == '__main__':
+    main()
